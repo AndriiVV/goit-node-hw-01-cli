@@ -14,16 +14,48 @@ async function listContacts() {
 	}
 }
 
+async function addContact(name, email, phone) {
+	const contacts = await listContacts();
+	const newContact = { id: 0, name, email, phone };
+	const contactsList = [...contacts, newContact].map(
+		({ name, email, phone }, index) => ({ id: index + 1, name, email, phone })
+	);
+
+	try {
+		await fs.writeFile(contactsPath, JSON.stringify(contactsList));
+	} catch (err) {
+		err.message = "addContact error";
+		throw new Error(err.message);
+	}
+}
+
 async function getContactById(contactId) {
-	// ...твой код
+	try {
+		const data = await fs.readFile(contactsPath);
+		const result = JSON.parse(data).filter((el) => el.id === contactId);
+		return result;
+	} catch (err) {
+		err.message = "getContactById error";
+		throw new Error(err.message);
+	}
 }
 
 async function removeContact(contactId) {
-	// ...твой код
-}
+	const contacts = await listContacts();
 
-async function addContact(name, email, phone) {
-	// ...твой код
+	if (contacts.findIndex(el => el.id === contactId) === -1) {
+		return console.log("Unable to remove non-exist contactId");
+	}
+
+	const contactsList = [...contacts].filter(({ id }) => id !== contactId);
+
+	try {
+		await fs.writeFile(contactsPath, JSON.stringify(contactsList));
+		return console.log("contactId removed");
+	} catch (err) {
+		err.message = "removeContact error";
+		throw new Error(err.message);
+	}
 }
 
 module.exports = {

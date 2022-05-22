@@ -1,3 +1,3 @@
 const { listContacts } = require("./contacts");
 
-listContacts();
+listContacts().then((res) => console.table(res));

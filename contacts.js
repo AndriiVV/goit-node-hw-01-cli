@@ -7,21 +7,22 @@ async function listContacts() {
 	try {
 		const data = await fs.readFile(contactsPath);
 		const result = JSON.parse(data);
-		console.table(result);
+		return result;
 	} catch (err) {
-		console.log(err.message);
+		err.message = "listContacts error";
+		throw new Error(err.message);
 	}
 }
 
-function getContactById(contactId) {
+async function getContactById(contactId) {
 	// ...твой код
 }
 
-function removeContact(contactId) {
+async function removeContact(contactId) {
 	// ...твой код
 }
 
-function addContact(name, email, phone) {
+async function addContact(name, email, phone) {
 	// ...твой код
 }
 

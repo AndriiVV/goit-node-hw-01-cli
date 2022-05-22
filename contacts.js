@@ -18,7 +18,12 @@ async function addContact(name, email, phone) {
 	const contacts = await listContacts();
 	const newContact = { id: 0, name, email, phone };
 	const contactsList = [...contacts, newContact].map(
-		({ name, email, phone }, index) => ({ id: index + 1, name, email, phone })
+		({ name, email, phone }, index) => ({
+			id: `${index + 1}`,
+			name,
+			email,
+			phone,
+		})
 	);
 
 	try {
@@ -43,7 +48,7 @@ async function getContactById(contactId) {
 async function removeContact(contactId) {
 	const contacts = await listContacts();
 
-	if (contacts.findIndex(el => el.id === contactId) === -1) {
+	if (contacts.findIndex((el) => el.id === contactId) === -1) {
 		return console.log("Unable to remove non-exist contactId");
 	}
 

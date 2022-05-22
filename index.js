@@ -25,7 +25,7 @@ function invokeAction({ action, id, name, email, phone }) {
 			break;
 
 		case "get":
-			getContactById(+id).then((res) =>
+			getContactById(id).then((res) =>
 				res.length ? console.table(res) : console.log("contactId not found")
 			);
 			break;
@@ -35,7 +35,7 @@ function invokeAction({ action, id, name, email, phone }) {
 			break;
 
 		case "remove":
-			removeContact(+id);
+			removeContact(id);
 			break;
 
 		default:
@@ -44,4 +44,3 @@ function invokeAction({ action, id, name, email, phone }) {
 }
 
 invokeAction(argv);
-
